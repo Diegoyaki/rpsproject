@@ -1,83 +1,123 @@
-
-function playGame() {
-    
-    let humanScore = 0
-    let computerScore = 0
-    let rondaActual = 1
-
-    function getComputerChoice() {
-        let choice;
-        let num = Math.floor(Math.random() * 3);
-        if (num == 0) {
-            choice = "piedra"
-        }
-        else if (num == 1) {
-            choice = "papel"
-        }
-        else {
-            choice = "tijera"
-        }
-        return choice
+function getComputerChoice() {
+    let choice;
+    let num = Math.floor(Math.random() * 3);
+    if (num == 0) {
+        choice = "ROCK"
     }
-
-
-    function determinarGanador(humanChoice, computerChoice) {
-
-        if (humanChoice === computerChoice) {
-            return "empate";
-        }
-
-        if (
-            (humanChoice === "piedra" && computerChoice === "tijera") ||
-            (humanChoice === "papel" && computerChoice === "piedra") ||
-            (humanChoice === "tijera" && computerChoice === "papel")
-        ) {
-            return "jugador";
-        }
-        
-        return "computadora";
-
+    else if (num == 1) {
+        choice = "PAPER"
     }
-
-    function jugarRonda() {
-        if (humanScore === 3 || computerScore === 3) {
-            return;
-        }
-        let entrada = prompt(`Ronda ${rondaActual}: Elige piedra papel o tijera`);
-
-        let humanChoice = entrada
-        let computerChoice = getComputerChoice();
-        let resultado = determinarGanador(humanChoice, computerChoice)
-
-        console.log(`Ronda ${rondaActual}`)
-        console.log(`Tu elegiste ${humanChoice}`)
-        console.log(`La computadora eligió ${computerChoice}`)
-
-        if (resultado === "empate") {
-            console.log("Empate")
-        } else if (resultado === "jugador") {
-            humanScore++;
-            console.log("Ganaste esta ronda!")
-        } else {
-            computerScore++;
-            console.log("La computadora ganó esta ronda")
-        }
-
-        console.log(`Marcador: Tú ${humanScore} - ${computerScore} Computadora\n`)
-        rondaActual++
-
-        if (humanScore === 3) {
-            console.log("!!!FELICIDADES Has ganado la partida")
-        } else if (computerScore === 3) {
-            console.log("La computadora ganó la partida..")
-        } else {
-            jugarRonda()
-        }
+    else {
+        choice = "SCISSORS"
     }
-
-    console.log("Comienza el juego")
-    jugarRonda();
-
+    return choice
 }
 
-playGame();
+let eleccionHumana = "";
+let ronda = 0
+let humanScore = 0
+let computerScore = 0
+const rondasTotales = 5
+
+function reiniciarJuego() {
+    ronda = 1;
+    humanScore = 0;
+    computerScore = 0;
+}
+
+function ganador(){
+    if (humanScore > computerScore) {
+        alert("WINNER!")
+    } else if (computerScore > humanScore) {
+        alert("LOSER...")
+    } else if (humanScore == computerScore) {
+        alert("DRAW!")
+    }
+}
+
+function winner() {
+    if(humanScore > computerScore) {
+        alert("YOU WIN! :D")
+    } else if (humanScore < computerScore) {
+        alert("YOU LOST... :,(")
+    } else {
+        alert("DRAW!!")
+    }
+}
+
+
+
+function playRound(eleccion) {
+
+
+    if (ronda == rondasTotales) {
+        winner()
+        alert("Game Over!")
+        ronda = 0
+        contador.textContent = ronda
+        humanScore = 0
+        humano.textContent = humanScore
+        computerScore = 0
+        ordenador.textContent = computerScore
+        resultado.textContent = ""
+        return;
+    }
+
+    
+
+    let eleccion2 = getComputerChoice()
+
+    if (eleccion === eleccion2) {
+        const nuevoTexto = `Human says: ${eleccion} Computer says: ${eleccion2}. DRAW!`
+        resultado.innerHTML += nuevoTexto + "<br>"
+        ronda++
+        contador.textContent = ronda
+
+        } else if (
+            (eleccion === "ROCK" && eleccion2 === "SCISSORS") ||
+            (eleccion === "PAPER" && eleccion2 === "ROCK") ||
+            (eleccion === "SCISSORS" && eleccion2 === "PAPER")
+        ) {
+            const nuevoTexto = `Human says: ${eleccion} Computer says: ${eleccion2}. You win! :)`
+            resultado.innerHTML += nuevoTexto + "<br>"
+            ronda++
+            contador.textContent = ronda
+            humanScore++;
+            humano.textContent = humanScore;
+        } else {
+            const nuevoTexto = `Human says: ${eleccion} Computer says: ${eleccion2}. You lost... :(`
+            resultado.innerHTML += nuevoTexto + "<br>"
+            ronda++
+            contador.textContent = ronda
+            computerScore++;
+            ordenador.textContent = computerScore;
+        }
+        
+}
+
+const rockButton = document.querySelector('#rock');
+const paperButton = document.querySelector('#paper');
+const scissorsButton = document.querySelector('#scissors');
+
+const resultado = document.querySelector('#resultado')
+const contador = document.querySelector('#ronda')
+
+const humano = document.querySelector('#humano')
+const ordenador = document.querySelector('#ordenador')
+
+
+
+rockButton.addEventListener("click", function() {
+    playRound("ROCK")
+    eleccionHumana = rockButton.value;
+});
+
+paperButton.addEventListener("click", function() {
+    playRound("PAPER")
+    eleccionHumana = paperButton.value;
+});
+
+scissorsButton.addEventListener("click", function() {
+    playRound("SCISSORS")
+    eleccionHumana = scissorsButton.value;
+});

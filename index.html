@@ -3,9 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>RPS</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <h1>LET'S PLAY!</h1>
+    <h3>ROUND: 
+        <div>******</div>
+        <div id="ronda">0</div>
+    </h3>
+    
+    <h3>SCORE:
+        <div>*********</div>
+        <div>human: <p id="humano">0</p></div>
+        <div>computer: <p id="ordenador">0</p></div>
+    </h3>
+    
+    
+
+    <button id="rock" value="ROCK">ROCK</button>
+    <button id="paper" value="PAPER">PAPER</button>
+    <button id="scissors" value="SCISSORS">SCISSORS</button>
+
+    <h3>RESULTS:
+        <div>********</div>
+        <div id="resultado"></div>
+    </h3>
+
+
     <script src="script.js"></script>
 </body>
 </html>
